@@ -1,5 +1,13 @@
-# Zola build output
+# Zola build output (served via wrangler [assets] directory = "./public")
 public/
+
+# Wrangler / Node
+node_modules/
+.wrangler/
+.dev.vars
+.mf/
+dist/
+
 # Local editor / OS noise
 .DS_Store
 *.swp

@@ -1,0 +1,21 @@
+{
+  "name": "defrag-blog",
+  "private": true,
+  "description": "Defrag engineering blog — Zola static site on a Cloudflare Worker assets binding",
+  "scripts": {
+    "build": "zola build",
+    "build:drafts": "zola build --drafts",
+    "serve": "zola serve",
+    "serve:drafts": "zola serve --drafts",
+    "dev": "npm run build && wrangler dev --env production",
+    "deploy:dev": "wrangler deploy --env dev",
+    "deploy": "wrangler deploy --env production",
+    "dry-run": "wrangler deploy --env production --dry-run"
+  },
+  "devDependencies": {
+    "wrangler": "4.43.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

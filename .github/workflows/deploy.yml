@@ -1,0 +1,52 @@
+# Deploy the Defrag blog Worker (static assets + thin /health entry).
+#
+# Required repository secrets (Settings → Secrets and variables → Actions):
+#   CLOUDFLARE_API_TOKEN   — token with Workers Scripts Edit + Workers Routes Edit
+#                            (and Account Settings Read if account_id is only in env)
+#   CLOUDFLARE_ACCOUNT_ID  — Cloudflare account id (wrangler.toml leaves account_id unset)
+#
+# Optional: edit wrangler.toml [env.production].routes before the first deploy.
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-blog
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Zola
+        run: |
+          set -euo pipefail
+          VER=v0.23.6
+          curl -sL "https://github.com/getzola/zola/releases/download/${VER}/zola-${VER}-x86_64-unknown-linux-gnu.tar.gz" | tar -xz
+          sudo mv zola /usr/local/bin/
+          zola --version
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install wrangler
+        run: npm ci
+
+      # wrangler [build] runs `zola build`; --env production is required because
+      # routes live under [env.*] (same rule as cnft.dev-workers deploy-target.sh).
+      - name: Deploy Worker
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: "4.43.0"
+          command: deploy --env production

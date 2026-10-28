@@ -1,0 +1,41 @@
+# ── Defrag blog — blog.<domain> ──────────────────────────────────────────────
+#
+# Engineering blog (Zola). Pattern mirrors cnft.dev-workers `sites/defrag`
+# (and augie/hodlcroft): thin worker + [assets] binding for the static build.
+#
+# Monorepo sites use a Rust cdylib → worker-build → build/worker/shim.mjs and
+# emit Zola into dist/. This standalone repo keeps a tiny JS entry and Zola's
+# default public/ output — same wrangler shape, less toolchain.
+#
+# PLACEHOLDERS — replace before first deploy:
+#   - account_id (or set CLOUDFLARE_ACCOUNT_ID in the environment / CI secrets)
+#   - [env.*.routes] patterns to the real hostnames
+name = "defrag-blog"
+# account_id = "YOUR_CLOUDFLARE_ACCOUNT_ID"
+main = "src/worker.js"
+compatibility_date = "2026-04-28"
+
+# Build static assets before upload. Wrangler runs this from the repo root.
+[build]
+command = "zola build"
+
+# Zola output. `404-page` serves public/404.html for unknown paths.
+# Only /health invokes the worker first; everything else is served from the bundle.
+[assets]
+directory = "./public"
+binding = "ASSETS"
+not_found_handling = "404-page"
+run_worker_first = ["/health"]
+
+[observability]
+enabled = true
+head_sampling_rate = 0.1
+
+# Custom-domain routes — same inline-table form as sites/*. Replace patterns.
+# Deploy with: npx wrangler deploy --env production
+# (Bare `wrangler deploy` on an env-scoped config publishes a route-less worker.)
+[env.dev]
+routes = [{ pattern = "dev.blog.example.invalid", custom_domain = true }]
+
+[env.production]
+routes = [{ pattern = "blog.example.invalid", custom_domain = true }]

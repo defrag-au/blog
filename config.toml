@@ -1,9 +1,9 @@
 # Defrag engineering blog — Zola
 #
-# IMPORTANT: Update base_url to the real Cloudflare Pages hostname once the
-# site is connected (e.g. https://blog.defrag.au or the *.pages.dev URL).
-# Until then this placeholder keeps local `zola build` / `zola serve` honest
-# about absolute feed and canonical links.
+# IMPORTANT: Update base_url to the real custom domain once the Worker is
+# routed (e.g. https://blog.defrag.au). Match wrangler.toml [env.production]
+# routes. Until then this placeholder keeps local `zola build` / `zola serve`
+# honest about absolute feed and canonical links.
 base_url = "https://blog.example.invalid"
 
 title = "Defrag"

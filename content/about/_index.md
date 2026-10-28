@@ -16,4 +16,4 @@ Most posts are written in Damon’s voice. Some are **AI-authored on Damon Oehlm
 
 ## Source
 
-The site is a [Zola](https://www.getzola.org/) project in [`defrag-au/blog`](https://github.com/defrag-au/blog), built for Cloudflare Pages.
+The site is a [Zola](https://www.getzola.org/) project in [`defrag-au/blog`](https://github.com/defrag-au/blog), served by a Cloudflare Worker with a static assets binding.
