@@ -1,0 +1,26 @@
+{% component demo(src: string, title: string = "Live demo", ratio: string = "wide", open_label: string = "Open in new tab", poster_label: string = "Click to load the interactive demo") %}
+<figure class="demo-embed" data-demo-root data-demo-src="{{ src }}" data-demo-title="{{ title }}">
+  <div class="demo-embed__chrome">
+    <span>{{ title }}</span>
+    <span>
+      <a href="{{ src }}" target="_blank" rel="noopener">{{ open_label }}</a>
+    </span>
+  </div>
+  <div class="demo-embed__frame-wrap" data-ratio="{{ ratio }}" data-demo-host>
+    <noscript>
+      <div class="demo-embed__noscript">
+        JavaScript is off, so the embed stays unloaded.
+        <a href="{{ src }}" target="_blank" rel="noopener">Open {{ title }} in a new tab</a>.
+      </div>
+    </noscript>
+    <button type="button" class="demo-embed__poster" data-demo-load>
+      <span class="demo-embed__play" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      </span>
+      <p class="demo-embed__poster-title">{{ title }}</p>
+      <p class="demo-embed__poster-hint">{{ poster_label }}. WASM stays unloaded until you opt in. After load, click the canvas once if keyboard controls don’t respond.</p>
+    </button>
+  </div>
+  <p class="demo-embed__focus-note">Tip: after the demo loads, click inside the frame so keyboard shortcuts reach the WASM app — then use fullscreen from the browser or the open-in-new-tab link.</p>
+</figure>
+{% endcomponent %}

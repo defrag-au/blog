@@ -1,15 +1,16 @@
 {% extends "base.html" %}
-
 {% block title %}Tags — {{ config.title }}{% endblock title %}
-
 {% block content %}
+<main class="wrap" style="padding-top:2.5rem">
+  <p class="kicker">Taxonomy</p>
   <h1>Tags</h1>
   <ul class="post-list">
     {% for term in terms %}
     <li>
       <h2><a href="{{ term.permalink }}">{{ term.name }}</a></h2>
-      <p class="desc">{{ term.pages | length }} post{% if term.pages | length != 1 %}s{% endif %}</p>
+      <p class="desc">{{ term.pages | length }} note{% if term.pages | length != 1 %}s{% endif %}</p>
     </li>
     {% endfor %}
   </ul>
+</main>
 {% endblock content %}

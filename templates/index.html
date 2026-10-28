@@ -1,37 +1,61 @@
 {% extends "base.html" %}
 
-{% block title %}{{ config.title }} — Posts{% endblock title %}
+{% block title %}{{ config.title }} — Engineering notes{% endblock title %}
 
 {% block content %}
-  <h1>Posts</h1>
-  <p class="lead">{{ config.description }}</p>
-
-  {% set posts_section = get_section(path="posts/_index.md") %}
-  {% if posts_section.pages %}
-  <ul class="post-list">
-    {% for page in posts_section.pages %}
-    <li>
-      <h2><a href="{{ page.permalink }}">{{ page.title }}</a></h2>
-      <div class="meta">
-        {% if page.date %}<time datetime="{{ page.date }}">{{ page.date | date(format="%d %b %Y") }}</time>{% endif %}
-        {% if page.authors %}
-          <span>{{ page.authors | join(sep=", ") }}</span>
-        {% endif %}
-        {% if page.taxonomies.tags %}
-          <span>
-            {% for tag in page.taxonomies.tags %}
-              <a class="tag" href="{{ get_taxonomy_url(kind='tags', name=tag) }}">{{ tag }}</a>
-            {% endfor %}
-          </span>
-        {% endif %}
+{% set home = get_section(path="_index.md") %}
+<main>
+  <section class="hero wrap-wide">
+    <div class="grid-ground" aria-hidden="true"></div>
+    <div style="position:relative">
+      <p class="kicker">{% if home.extra.kicker %}{{ home.extra.kicker }}{% else %}Cardano · engineering{% endif %}</p>
+      <h1>{% if home.extra.headline %}{{ home.extra.headline }}{% else %}{{ config.title }}{% endif %}</h1>
+      <p class="tagline">{% if home.extra.tagline %}{{ home.extra.tagline }}{% else %}{{ config.description }}{% endif %}</p>
+      {% if home.extra.pillars %}
+      <div class="pillars" role="list">
+        {% for item in home.extra.pillars %}
+        <div class="pillar" role="listitem">
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.body }}</p>
+        </div>
+        {% endfor %}
       </div>
-      {% if page.description %}
-      <p class="desc">{{ page.description }}</p>
       {% endif %}
-    </li>
-    {% endfor %}
-  </ul>
-  {% else %}
-  <p class="lead">No published posts yet. Drafts live in <code>content/posts/</code> with <code>draft = true</code>.</p>
-  {% endif %}
+    </div>
+  </section>
+
+  <section class="band wrap-wide" id="notes">
+    <h2 class="section-label">Notes</h2>
+    {% set posts_section = get_section(path="posts/_index.md") %}
+    {% if posts_section.pages %}
+    <ul class="post-list">
+      {% for page in posts_section.pages %}
+      <li>
+        <h2><a href="{{ page.permalink }}">{{ page.title }}</a></h2>
+        <div class="meta">
+          {% if page.date %}<time datetime="{{ page.date }}">{{ page.date | date(format="%d %b %Y") }}</time>{% endif %}
+          {% if page.reading_time %}<span>{{ page.reading_time }} min read</span>{% endif %}
+          {% if page.authors %}<span>{{ page.authors | join(sep=", ") }}</span>{% endif %}
+          {% if page.extra.drafted_by %}<span>drafted by {{ page.extra.drafted_by }}</span>{% endif %}
+        </div>
+        {% if page.taxonomies.tags %}
+        <p style="margin:0.55rem 0 0">
+          {% for tag in page.taxonomies.tags %}
+            <a class="tag" href="{{ get_taxonomy_url(kind='tags', name=tag) }}">{{ tag }}</a>
+          {% endfor %}
+        </p>
+        {% endif %}
+        {% if page.description %}<p class="desc">{{ page.description }}</p>{% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <div class="posts-empty">
+      <h3>{% if home.extra.empty_title %}{{ home.extra.empty_title }}{% else %}Nothing on the feed yet{% endif %}</h3>
+      <p>{% if home.extra.empty_body %}{{ home.extra.empty_body }}{% else %}Drafts are on the bench. Published notes will land here.{% endif %}</p>
+      <p class="hint">zola · workers · assets binding · blog.defrag.au</p>
+    </div>
+    {% endif %}
+  </section>
+</main>
 {% endblock content %}

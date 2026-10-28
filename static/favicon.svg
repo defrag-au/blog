@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Four tiles folding into one: the mark is the name. From sites/defrag. -->
+  <rect width="64" height="64" rx="13" fill="#07080c"/>
+  <rect x="14" y="14" width="16" height="16" rx="3" fill="#5b9dff" fill-opacity="0.35"/>
+  <rect x="34" y="14" width="16" height="16" rx="3" fill="#5b9dff" fill-opacity="0.55"/>
+  <rect x="14" y="34" width="16" height="16" rx="3" fill="#5b9dff" fill-opacity="0.75"/>
+  <rect x="34" y="34" width="16" height="16" rx="3" fill="#5b9dff"/>
+</svg>

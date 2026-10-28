@@ -1,12 +1,13 @@
 {
   "name": "defrag-blog",
   "private": true,
-  "description": "Defrag engineering blog — Zola static site on a Cloudflare Worker assets binding",
+  "description": "Defrag engineering blog \u2014 Zola static site on a Cloudflare Worker assets binding",
   "scripts": {
-    "build": "zola build",
-    "build:drafts": "zola build --drafts",
-    "serve": "zola serve",
-    "serve:drafts": "zola serve --drafts",
+    "og": "python3 scripts/generate-og-cards.py",
+    "build": "bash scripts/build.sh",
+    "build:drafts": "bash scripts/build.sh --drafts",
+    "serve": "python3 scripts/generate-og-cards.py && zola serve",
+    "serve:drafts": "python3 scripts/generate-og-cards.py && zola serve --drafts",
     "dev": "npm run build && wrangler dev --env production",
     "deploy:dev": "wrangler deploy --env dev",
     "deploy": "wrangler deploy --env production",

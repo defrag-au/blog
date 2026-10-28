@@ -15,7 +15,7 @@ compatibility_date = "2026-04-28"
 
 # Build static assets before upload. Wrangler runs this from the repo root.
 [build]
-command = "zola build"
+command = "bash scripts/build.sh"
 
 # Zola output. `404-page` serves public/404.html for unknown paths.
 # Only /health invokes the worker first; everything else is served from the bundle.

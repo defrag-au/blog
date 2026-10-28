@@ -1,13 +1,8 @@
 # Deploy the Defrag blog Worker (static assets + thin /health entry).
 #
-# Secrets (same names as cnft.dev-workers deploys) — provided as defrag-au
-# ORGANIZATION secrets; no per-repo copies needed when the org policy includes
-# this repository:
+# Secrets — defrag-au ORGANIZATION secrets (same names as cnft.dev-workers):
 #   CLOUDFLARE_API_TOKEN
 #   CLOUDFLARE_ACCOUNT_ID
-#
-# `${{ secrets.* }}` resolves org secrets automatically when the repo is in
-# the secret's repository access list.
 name: Deploy
 
 on:
@@ -35,6 +30,13 @@ jobs:
           sudo mv zola /usr/local/bin/
           zola --version
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Pillow (OG share cards)
+        run: pip install --quiet "pillow==12.3.0"
+
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
@@ -43,8 +45,7 @@ jobs:
       - name: Install wrangler
         run: npm ci
 
-      # wrangler [build] runs `zola build`; --env production is required because
-      # routes live under [env.*] (same rule as cnft.dev-workers deploy-target.sh).
+      # wrangler [build] → scripts/build.sh (OG cards, then zola build)
       - name: Deploy Worker
         uses: cloudflare/wrangler-action@v3
         with:

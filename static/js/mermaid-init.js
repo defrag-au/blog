@@ -4,7 +4,6 @@
     document.querySelectorAll("pre code.language-mermaid, pre code[data-lang='mermaid']").forEach(function (code) {
       nodes.push(code);
     });
-    // Some highlight themes wrap differently
     document.querySelectorAll("pre.language-mermaid code, pre.mermaid code").forEach(function (code) {
       if (nodes.indexOf(code) === -1) nodes.push(code);
     });
@@ -16,8 +15,17 @@
     if (!blocks.length || typeof mermaid === "undefined") return;
     mermaid.initialize({
       startOnLoad: false,
-      theme: window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "default",
+      theme: "dark",
       securityLevel: "loose",
+      themeVariables: {
+        darkMode: true,
+        background: "#0d1017",
+        primaryColor: "#1a2438",
+        primaryTextColor: "#d3d8e2",
+        lineColor: "#5b9dff",
+        secondaryColor: "#12161f",
+        tertiaryColor: "#07080c",
+      },
     });
     blocks.forEach(function (code, i) {
       var pre = code.closest("pre") || code.parentElement;

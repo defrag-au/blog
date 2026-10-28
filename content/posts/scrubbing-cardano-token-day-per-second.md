@@ -17,7 +17,11 @@ authorship_note = "AI-authored on Damon Oehlman's behalf from his in-progress co
 
 I still stand by the statement that I won't build a TapTools replacement. That does not stop me showing how damn fast things can be with Rust if you architect them well.
 
-Open the [TOKEN ARENA demo for $NikePig](https://flows.hodlcroft.com/arena/?policy=c881c20e49dbaca3ff6cef365969354150983230c39520b917f5cf7c), set the speed to **1D/S**, hit **ALL**, and watch the token's whole life scrub from its mint to now. Holders swim, pools open, the price line steps. That is the same history the archive holds — just not served as "give me a megabyte of JSON and hope the browser keeps up."
+Open the TOKEN ARENA demo for $NikePig — or load it inline below — set the speed to **1D/S**, hit **ALL**, and watch the token's whole life scrub from its mint to now.
+
+{{<demo src="https://flows.hodlcroft.com/arena/?policy=c881c20e49dbaca3ff6cef365969354150983230c39520b917f5cf7c" title="TOKEN ARENA · NikePig" ratio="wide" />}}
+
+Prefer a separate tab: [flows.hodlcroft.com/arena (NikePig)](https://flows.hodlcroft.com/arena/?policy=c881c20e49dbaca3ff6cef365969354150983230c39520b917f5cf7c). Holders swim, pools open, the price line steps. That is the same history the archive holds — just not served as "give me a megabyte of JSON and hope the browser keeps up."
 
 This is a tech demonstrator. A handful of tokens are supported. The point is the stack:
 

@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07080c">
   <title>{% block title %}{{ config.title }}{% endblock title %}</title>
   {% if page and page.description %}
   <meta name="description" content="{{ page.description }}">
@@ -11,7 +12,32 @@
   {% elif config.description %}
   <meta name="description" content="{{ config.description }}">
   {% endif %}
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;650&display=swap">
+  {% block social_meta %}
+  {% if page %}
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="{{ page.title }}">
+  <meta property="og:description" content="{{ page.description | default(value=config.description) }}">
+  <meta property="og:url" content="{{ page.permalink }}">
+  <meta property="og:image" content="{{ get_url(path='og/' ~ page.slug ~ '.png') }}">
+  <meta name="twitter:title" content="{{ page.title }}">
+  <meta name="twitter:description" content="{{ page.description | default(value=config.description) }}">
+  <meta name="twitter:image" content="{{ get_url(path='og/' ~ page.slug ~ '.png') }}">
+  {% else %}
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{% if section %}{{ section.title }} — {{ config.title }}{% else %}{{ config.title }}{% endif %}">
+  <meta property="og:description" content="{% if section and section.description %}{{ section.description }}{% else %}{{ config.description }}{% endif %}">
+  <meta property="og:url" content="{% if section %}{{ section.permalink }}{% else %}{{ get_url(path='/') }}{% endif %}">
+  <meta property="og:image" content="{{ get_url(path='og/default.png') }}">
+  <meta name="twitter:title" content="{% if section %}{{ section.title }} — {{ config.title }}{% else %}{{ config.title }}{% endif %}">
+  <meta name="twitter:description" content="{% if section and section.description %}{{ section.description }}{% else %}{{ config.description }}{% endif %}">
+  <meta name="twitter:image" content="{{ get_url(path='og/default.png') }}">
+  {% endif %}
+  <meta property="og:site_name" content="{{ config.title }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  {% endblock social_meta %}
+  <link rel="icon" href="{{ get_url(path='favicon.svg') }}" type="image/svg+xml">
   <link rel="stylesheet" href="{{ get_url(path='css/site.css') }}">
   <link rel="alternate" type="application/atom+xml" title="{{ config.title }} Atom" href="{{ get_url(path='atom.xml', trailing_slash=false) }}">
   <link rel="alternate" type="application/rss+xml" title="{{ config.title }} RSS" href="{{ get_url(path='rss.xml', trailing_slash=false) }}">
@@ -19,32 +45,43 @@
 </head>
 <body>
   <header class="site-header">
-    <div class="wrap">
-      <a class="brand" href="{{ get_url(path='/') }}">{{ config.title }}</a>
+    <div class="wrap-wide bar">
+      <a class="brand" href="{{ get_url(path='/') }}">
+        <span class="brand-mark" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </span>
+        <span class="brand-word">Defrag</span>
+      </a>
       <nav class="nav">
-        <a href="{{ get_url(path='/') }}">Posts</a>
+        <a href="{{ get_url(path='/') }}">Notes</a>
         <a href="{{ get_url(path='about/') }}">About</a>
         <a href="{{ get_url(path='tags/') }}">Tags</a>
         <a href="{{ get_url(path='atom.xml', trailing_slash=false) }}">Feed</a>
+        {% if config.extra.github_url %}
+        <a href="{{ config.extra.github_url }}" rel="noopener">GitHub</a>
+        {% endif %}
       </nav>
     </div>
   </header>
 
-  <main class="wrap">
-    {% block content %}{% endblock content %}
-  </main>
+  {% block content %}{% endblock content %}
 
   <footer class="site-footer">
-    <div class="wrap">
-      <p>{{ config.title }} — engineering notes. Some posts are drafted with AI assistance on behalf of Damon Oehlman and credited as such.</p>
-      {% if config.extra.github_repo %}
-      <p><a href="{{ config.extra.github_repo }}">Source on GitHub</a></p>
-      {% endif %}
+    <div class="wrap-wide">
+      <p>Engineering notes from Defrag. Some posts are AI-authored on Damon Oehlman’s behalf and credited in the byline.</p>
+      <div class="meta-row" style="margin-top:1.25rem">
+        <span>© {{ now() | date(format="%Y") }} {% if config.extra.operator %}{{ config.extra.operator }}{% else %}Defrag{% endif %}</span>
+        <span>
+          {% if config.extra.github_repo %}<a href="{{ config.extra.github_repo }}">Source</a> · {% endif %}
+          rendered with Zola · served from Cloudflare Workers
+        </span>
+      </div>
     </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
   <script src="{{ get_url(path='js/mermaid-init.js') }}"></script>
+  <script src="{{ get_url(path='js/site.js') }}"></script>
   {% block scripts %}{% endblock scripts %}
 </body>
 </html>

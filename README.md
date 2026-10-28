@@ -18,17 +18,31 @@ src/worker.js        # thin Worker: /health only (run_worker_first)
 wrangler.toml        # Worker name, assets binding, env routes
 ```
 
+
+## Design & content features
+
+- Dark bench theme aligned with defrag.au / `sites/defrag` (void/panel/signal palette, four-tile mark, mono labels).
+- Landing hero + pillars grounded in the studio's published copy; intentional empty state when no posts are published.
+- Live demo embeds via a Zola **Tera component** (shortcodes were removed in Zola 0.23). In Markdown:
+
+      {{<demo src="https://example/demo" title="Demo" ratio="wide" />}}
+
+  Click-to-load iframe, noscript fallback, open-in-new-tab, keyboard-focus tip.
+- Share cards: `scripts/generate-og-cards.py` (Pillow) writes 1200×630 PNGs to `static/og/` before `zola build` (`scripts/build.sh`). Templates emit `og:` / `twitter:summary_large_image` meta.
+
 ## Local development
 
 Install [Zola 0.23.6](https://github.com/getzola/zola/releases/tag/v0.23.6) and Node 20+.
 
 ```bash
-zola serve                 # http://127.0.0.1:1111 — content only
-zola serve --drafts        # include draft = true posts
 npm ci
-npm run build              # zola build → public/
+npm run serve              # generates OG cards, then zola serve
+npm run serve:drafts       # include draft = true posts
+npm run build              # scripts/build.sh → OG cards + zola → public/
 npx wrangler dev --env production   # Worker + assets locally (needs build first)
 ```
+
+`zola serve` alone still works if `static/og/*.png` already exist (committed or previously generated). Pillow is required for card generation (`pip install pillow`).
 
 Drafts are excluded from `zola build` / plain `zola serve`. Preview them with `--drafts`.
 

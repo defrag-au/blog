@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% block title %}Not found — {{ config.title }}{% endblock title %}
 {% block content %}
-  <h1>404</h1>
-  <p>That page isn’t here. <a href="{{ get_url(path='/') }}">Back to posts</a>.</p>
+<main class="wrap" style="padding-top:4rem">
+  <p class="kicker">404</p>
+  <h1>Nothing at this path</h1>
+  <p class="tagline">That page isn’t on the bench. <a href="{{ get_url(path='/') }}">Back to notes</a>.</p>
+</main>
 {% endblock content %}

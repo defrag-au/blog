@@ -3,24 +3,26 @@
 {% block title %}{{ section.title }} — {{ config.title }}{% endblock title %}
 
 {% block content %}
+<main class="wrap" style="padding-top:2.5rem">
+  <p class="kicker">Section</p>
   <h1>{{ section.title }}</h1>
-  {% if section.description %}<p class="lead">{{ section.description }}</p>{% endif %}
-
+  {% if section.description %}<p class="tagline" style="margin-top:0.75rem">{{ section.description }}</p>{% endif %}
   {% if section.content %}
-  <div class="content">{{ section.content | safe }}</div>
+  <div class="content" style="margin-top:1.5rem">{{ section.content | safe }}</div>
   {% endif %}
-
   {% if section.pages %}
-  <ul class="post-list">
+  <ul class="post-list" style="margin-top:2rem">
     {% for page in section.pages %}
     <li>
       <h2><a href="{{ page.permalink }}">{{ page.title }}</a></h2>
       <div class="meta">
         {% if page.date %}<time datetime="{{ page.date }}">{{ page.date | date(format="%d %b %Y") }}</time>{% endif %}
-        {% if page.description %}<span>{{ page.description }}</span>{% endif %}
+        {% if page.reading_time %}<span>{{ page.reading_time }} min read</span>{% endif %}
       </div>
+      {% if page.description %}<p class="desc">{{ page.description }}</p>{% endif %}
     </li>
     {% endfor %}
   </ul>
   {% endif %}
+</main>
 {% endblock content %}
