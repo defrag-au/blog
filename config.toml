@@ -1,7 +1,7 @@
 # Defrag engineering blog — Zola
 #
 # Production origin — must match wrangler.toml [env.production] custom domain.
-base_url = "https://blog.defrag.au"
+base_url = "http://127.0.0.1:8765"
 
 title = "Defrag"
 description = "Engineering notes from Defrag — tooling, infrastructure and preservation for the Cardano ecosystem. Rust, Mithril, Cloudflare Workers."

@@ -26,9 +26,8 @@
 
     {% if page.extra.drafted_by %}
     <div class="byline-note">
-      <strong>AI-authored on Damon Oehlman’s behalf.</strong>
-      Drafted by {{ page.extra.drafted_by }}.
-      {% if page.extra.authorship_note %} {{ page.extra.authorship_note }}{% endif %}
+      <strong>AI-authored on Damon Oehlman’s behalf</strong>
+      — drafted by {{ page.extra.drafted_by }}{% if page.extra.authorship_note %}; {{ page.extra.authorship_note }}{% endif %}
     </div>
     {% endif %}
 

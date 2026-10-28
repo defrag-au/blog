@@ -8,12 +8,8 @@ authors = ["Damon Oehlman"]
 tags = ["rust", "cardano", "mithril", "cloudflare-workers", "macroquad", "token-tape", "architecture"]
 [extra]
 drafted_by = "Promoter Bot"
-authorship_note = "AI-authored on Damon Oehlman's behalf from his in-progress code and design notes. Numbers marked measured come from comments and design docs in those trees."
+authorship_note = "from in-progress code and design notes across mitos, cnft.dev-workers, and shared-crates. Numbers marked measured come from those trees; [TODO] items still need Damon review before this ships."
 +++
-
-> **Authorship note.** This piece was drafted by **Promoter Bot**, an AI assistant, on behalf of Damon Oehlman (@DamonOehlman / Spanners), from his in-progress code and design notes across `defrag-au/mitos` (`token-summaries`), `defrag-au/cnft.dev-workers` (`token-summaries`), and `defrag-au/shared-crates` (`damon-bonding-fun`). Numbers marked *measured* come from comments and design docs in those trees. Anything in `[TODO: …]` needs Damon's eye before this ships.
-
----
 
 I still stand by the statement that I won't build a TapTools replacement. That does not stop me showing how damn fast things can be with Rust if you architect them well.
 
