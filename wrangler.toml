@@ -1,4 +1,4 @@
-# ── Defrag blog — blog.<domain> ──────────────────────────────────────────────
+# ── Defrag blog — blog.defrag.au ─────────────────────────────────────────────
 #
 # Engineering blog (Zola). Pattern mirrors cnft.dev-workers `sites/defrag`
 # (and augie/hodlcroft): thin worker + [assets] binding for the static build.
@@ -7,11 +7,9 @@
 # emit Zola into dist/. This standalone repo keeps a tiny JS entry and Zola's
 # default public/ output — same wrangler shape, less toolchain.
 #
-# PLACEHOLDERS — replace before first deploy:
-#   - account_id (or set CLOUDFLARE_ACCOUNT_ID in the environment / CI secrets)
-#   - [env.*.routes] patterns to the real hostnames
+# Account id comes from CLOUDFLARE_ACCOUNT_ID (defrag-au org Actions secret),
+# not hardcoded here.
 name = "defrag-blog"
-# account_id = "YOUR_CLOUDFLARE_ACCOUNT_ID"
 main = "src/worker.js"
 compatibility_date = "2026-04-28"
 
@@ -31,11 +29,11 @@ run_worker_first = ["/health"]
 enabled = true
 head_sampling_rate = 0.1
 
-# Custom-domain routes — same inline-table form as sites/*. Replace patterns.
+# Custom domains — same inline-table form as sites/defrag (custom_domain = true).
 # Deploy with: npx wrangler deploy --env production
 # (Bare `wrangler deploy` on an env-scoped config publishes a route-less worker.)
 [env.dev]
-routes = [{ pattern = "dev.blog.example.invalid", custom_domain = true }]
+routes = [{ pattern = "dev.blog.defrag.au", custom_domain = true }]
 
 [env.production]
-routes = [{ pattern = "blog.example.invalid", custom_domain = true }]
+routes = [{ pattern = "blog.defrag.au", custom_domain = true }]

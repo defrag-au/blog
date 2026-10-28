@@ -1,11 +1,13 @@
 # Deploy the Defrag blog Worker (static assets + thin /health entry).
 #
-# Required repository secrets (Settings → Secrets and variables → Actions):
-#   CLOUDFLARE_API_TOKEN   — token with Workers Scripts Edit + Workers Routes Edit
-#                            (and Account Settings Read if account_id is only in env)
-#   CLOUDFLARE_ACCOUNT_ID  — Cloudflare account id (wrangler.toml leaves account_id unset)
+# Secrets (same names as cnft.dev-workers deploys) — provided as defrag-au
+# ORGANIZATION secrets; no per-repo copies needed when the org policy includes
+# this repository:
+#   CLOUDFLARE_API_TOKEN
+#   CLOUDFLARE_ACCOUNT_ID
 #
-# Optional: edit wrangler.toml [env.production].routes before the first deploy.
+# `${{ secrets.* }}` resolves org secrets automatically when the repo is in
+# the secret's repository access list.
 name: Deploy
 
 on:

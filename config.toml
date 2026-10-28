@@ -1,10 +1,7 @@
 # Defrag engineering blog — Zola
 #
-# IMPORTANT: Update base_url to the real custom domain once the Worker is
-# routed (e.g. https://blog.defrag.au). Match wrangler.toml [env.production]
-# routes. Until then this placeholder keeps local `zola build` / `zola serve`
-# honest about absolute feed and canonical links.
-base_url = "https://blog.example.invalid"
+# Production origin — must match wrangler.toml [env.production] custom domain.
+base_url = "https://blog.defrag.au"
 
 title = "Defrag"
 description = "Engineering notes from Defrag — Cardano tooling, Rust at the edge, and the odd tech demonstrator."

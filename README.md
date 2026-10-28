@@ -32,7 +32,7 @@ npx wrangler dev --env production   # Worker + assets locally (needs build first
 
 Drafts are excluded from `zola build` / plain `zola serve`. Preview them with `--drafts`.
 
-Before go-live, set `config.toml` `base_url` to the real https origin (must match the production route).
+`base_url` is already `https://blog.defrag.au` (keep it aligned with the production custom domain).
 
 ## Deploy (Cloudflare Worker + assets)
 
@@ -48,24 +48,20 @@ This is **not** Cloudflare Pages. Config mirrors `sites/defrag/wrangler.toml`:
 | `not_found_handling` | `404-page` |
 | `run_worker_first` | `["/health"]` |
 | `[build].command` | `zola build` |
+| Production custom domain | `blog.defrag.au` (`custom_domain = true`) |
+| Dev custom domain | `dev.blog.defrag.au` (same `dev.` prefix pattern as `sites/defrag`) |
+| `config.toml` `base_url` | `https://blog.defrag.au` |
 
-### One-time setup (Damon)
+### Secrets (organisation)
 
-1. **Edit placeholders in `wrangler.toml`**
-   - Uncomment / set `account_id`, **or** rely on `CLOUDFLARE_ACCOUNT_ID` (preferred for CI).
-   - Replace `[env.dev].routes` / `[env.production].routes` patterns (e.g. `dev.blog.defrag.au`, `blog.defrag.au`) — same `{ pattern, custom_domain = true }` form as the monorepo sites. Do **not** commit someone else’s account id.
-2. **Set `config.toml` `base_url`** to `https://<production-host>`.
-3. **API token** with permission to edit Workers scripts and routes (Account → Workers Scripts:Edit, Workers Routes:Edit; zone DNS/route as needed for the custom domain).
-4. **GitHub Actions secrets** on `defrag-au/blog` (for `.github/workflows/deploy.yml`):
-   - `CLOUDFLARE_API_TOKEN`
-   - `CLOUDFLARE_ACCOUNT_ID`
+`CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` live as **defrag-au organisation secrets** (same names the monorepo deploy actions use). The workflow reads them via `${{ secrets.CLOUDFLARE_API_TOKEN }}` / `${{ secrets.CLOUDFLARE_ACCOUNT_ID }}` — no per-repo secrets. If a run fails with empty credentials, the org secret’s repository access policy may not include this public repo yet (Damon: widen visibility / add `blog` under the secret’s selected repos).
 
 ### Local / manual deploy
 
 ```bash
 npm ci
 export CLOUDFLARE_API_TOKEN=…          # or wrangler login
-export CLOUDFLARE_ACCOUNT_ID=…         # if account_id unset in wrangler.toml
+export CLOUDFLARE_ACCOUNT_ID=…
 npx wrangler deploy --env production   # runs `zola build`, then uploads
 # or: npm run deploy
 ```
@@ -81,7 +77,7 @@ npm run dry-run
 
 ### CI
 
-Push to `main` (or **Actions → Deploy → Run workflow**) runs `.github/workflows/deploy.yml`: installs Zola 0.23.6, `npm ci`, then `wrangler deploy --env production` via `cloudflare/wrangler-action@v3` (wrangler **4.43.0**, same pin as cnft.dev-workers’ deploy-worker action default).
+Push to `main` (or **Actions → Deploy → Run workflow**) runs `.github/workflows/deploy.yml`: installs Zola 0.23.6, `npm ci`, then `wrangler deploy --env production` via `cloudflare/wrangler-action@v3` (wrangler **4.43.0**).
 
 ### Divergence from monorepo `sites/`
 
