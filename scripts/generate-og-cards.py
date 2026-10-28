@@ -178,8 +178,8 @@ def main() -> int:
     OUT.mkdir(parents=True, exist_ok=True)
     # Default / home card
     paint_card(
-        "Engineering notes from the bench",
-        "Rust · Cardano tooling · Cloudflare-native infrastructure",
+        "Small tools for the Cardano ecosystem.",
+        "Indexers · community tools · archives — Rust, Mithril, Cloudflare-native",
         ["rust", "cardano", "cloudflare"],
     ).save(OUT / "default.png", optimize=True)
     print(f"wrote {OUT / 'default.png'}")
