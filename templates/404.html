@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}Not found — {{ config.title }}{% endblock title %}
+{% block content %}
+  <h1>404</h1>
+  <p>That page isn’t here. <a href="{{ get_url(path='/') }}">Back to posts</a>.</p>
+{% endblock content %}

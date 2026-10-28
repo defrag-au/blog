@@ -1,0 +1,7 @@
+# Zola build output
+public/
+# Local editor / OS noise
+.DS_Store
+*.swp
+.idea/
+.vscode/

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ config.title }}{% endblock title %}</title>
+  {% if page and page.description %}
+  <meta name="description" content="{{ page.description }}">
+  {% elif section and section.description %}
+  <meta name="description" content="{{ section.description }}">
+  {% elif config.description %}
+  <meta name="description" content="{{ config.description }}">
+  {% endif %}
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;650&display=swap">
+  <link rel="stylesheet" href="{{ get_url(path='css/site.css') }}">
+  <link rel="alternate" type="application/atom+xml" title="{{ config.title }} Atom" href="{{ get_url(path='atom.xml', trailing_slash=false) }}">
+  <link rel="alternate" type="application/rss+xml" title="{{ config.title }} RSS" href="{{ get_url(path='rss.xml', trailing_slash=false) }}">
+  {% block head %}{% endblock head %}
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="{{ get_url(path='/') }}">{{ config.title }}</a>
+      <nav class="nav">
+        <a href="{{ get_url(path='/') }}">Posts</a>
+        <a href="{{ get_url(path='about/') }}">About</a>
+        <a href="{{ get_url(path='tags/') }}">Tags</a>
+        <a href="{{ get_url(path='atom.xml', trailing_slash=false) }}">Feed</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    {% block content %}{% endblock content %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>{{ config.title }} — engineering notes. Some posts are drafted with AI assistance on behalf of Damon Oehlman and credited as such.</p>
+      {% if config.extra.github_repo %}
+      <p><a href="{{ config.extra.github_repo }}">Source on GitHub</a></p>
+      {% endif %}
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <script src="{{ get_url(path='js/mermaid-init.js') }}"></script>
+  {% block scripts %}{% endblock scripts %}
+</body>
+</html>

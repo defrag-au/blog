@@ -1,0 +1,42 @@
+# Defrag engineering blog — Zola
+#
+# IMPORTANT: Update base_url to the real Cloudflare Pages hostname once the
+# site is connected (e.g. https://blog.defrag.au or the *.pages.dev URL).
+# Until then this placeholder keeps local `zola build` / `zola serve` honest
+# about absolute feed and canonical links.
+base_url = "https://blog.example.invalid"
+
+title = "Defrag"
+description = "Engineering notes from Defrag — Cardano tooling, Rust at the edge, and the odd tech demonstrator."
+default_language = "en"
+
+compile_sass = false
+minify_html = false
+build_search_index = false
+
+generate_feeds = true
+feed_filenames = ["atom.xml", "rss.xml"]
+author = "Damon Oehlman"
+
+taxonomies = [
+    { name = "tags", feed = true, paginate_by = 20 },
+]
+
+[markdown]
+render_emoji = false
+external_links_target_blank = true
+external_links_no_follow = false
+smart_punctuation = true
+bottom_footnotes = true
+insert_anchor_links = "left"
+
+[markdown.highlighting]
+# Enables syntax highlighting (required theme in 0.23+)
+light_theme = "github-light"
+dark_theme = "github-dark"
+style = "inline"
+error_on_missing_language = false
+
+[extra]
+# Site chrome
+github_repo = "https://github.com/defrag-au/blog"

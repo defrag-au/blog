@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}{{ config.title }} — Posts{% endblock title %}
+
+{% block content %}
+  <h1>Posts</h1>
+  <p class="lead">{{ config.description }}</p>
+
+  {% set posts_section = get_section(path="posts/_index.md") %}
+  {% if posts_section.pages %}
+  <ul class="post-list">
+    {% for page in posts_section.pages %}
+    <li>
+      <h2><a href="{{ page.permalink }}">{{ page.title }}</a></h2>
+      <div class="meta">
+        {% if page.date %}<time datetime="{{ page.date }}">{{ page.date | date(format="%d %b %Y") }}</time>{% endif %}
+        {% if page.authors %}
+          <span>{{ page.authors | join(sep=", ") }}</span>
+        {% endif %}
+        {% if page.taxonomies.tags %}
+          <span>
+            {% for tag in page.taxonomies.tags %}
+              <a class="tag" href="{{ get_taxonomy_url(kind='tags', name=tag) }}">{{ tag }}</a>
+            {% endfor %}
+          </span>
+        {% endif %}
+      </div>
+      {% if page.description %}
+      <p class="desc">{{ page.description }}</p>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="lead">No published posts yet. Drafts live in <code>content/posts/</code> with <code>draft = true</code>.</p>
+  {% endif %}
+{% endblock content %}
