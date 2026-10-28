@@ -6,7 +6,7 @@ template = "index.html"
 
 [extra]
 kicker = "Cardano · Rust · Cloudflare"
-headline = "Small tools for the Cardano ecosystem."
+headline = "Workshop notes from a blockchain skunkworks division."
 tagline = "Unglamorous parts — indexers, community tools, archives, worker plumbing. Written up here: Rust at the edge, Mithril-backed data, Cloudflare-native."
 empty_title = "The feed is quiet — the bench is not"
 empty_body = "No notes are published yet. Drafts stay local until they’re ready; when they ship, they’ll land here with tags, feeds, and share cards. Until then this page is the lab door, not an empty inbox."

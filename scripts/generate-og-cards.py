@@ -178,7 +178,7 @@ def main() -> int:
     OUT.mkdir(parents=True, exist_ok=True)
     # Default / home card
     paint_card(
-        "Small tools for the Cardano ecosystem.",
+        "Workshop notes from a blockchain skunkworks division.",
         "Indexers · community tools · archives — Rust, Mithril, Cloudflare-native",
         ["rust", "cardano", "cloudflare"],
     ).save(OUT / "default.png", optimize=True)
