@@ -22,6 +22,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Guard production base_url
+        run: grep -qx 'base_url = "https://blog.defrag.au"' config.toml || { echo "config.toml base_url is not production"; exit 1; }
+
       - name: Install Zola
         run: |
           set -euo pipefail
